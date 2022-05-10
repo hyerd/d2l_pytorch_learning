@@ -1,0 +1,25 @@
+import torch
+
+x=torch.arange(4.0)
+print("x is",x)
+#分配x
+x.requires_grad=True
+print("grad for x is ",x.grad)
+#设置x的梯度,初始值为NONE
+y=2 * torch.dot(x,x)
+print("y is",y)
+#分配y
+y.backward()
+print("grad for x is ",x.grad)
+#使用反向传播函数计算y关于每个x的梯度，并打印出来
+#由上列式子可得出y关于x的梯度应该为x.grad=4x
+x.grad == 4 * x
+
+#在默认情况下，Pytorch会累计梯度，需要清出之前的值
+#本例子不是在命令行运行，所以无需清除
+"""
+x.grad.zero_()
+y=x.sum()
+y.backward()
+x.grad
+"""
